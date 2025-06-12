@@ -1,183 +1,134 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
-import { Rubik } from "next/font/google";
-import {
-  FaHome,
-  FaBell,
-  FaUserCircle,
-  FaChartLine,
-  FaFileAlt,
-  FaPen,
-  FaCogs,
-} from "react-icons/fa";
-import DocumentEditorModal from "@/components/DocumentEditorModal";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-// Configuração da fonte corporativa
-const rubik = Rubik({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-rubik",
-});
+import { FaBook, FaBullseye, FaCalendarAlt, FaClipboardCheck } from "react-icons/fa";
 
-const sidebarItems = [
-  { id: "dashboard", label: "Dashboard", icon: <FaHome /> },
-  { id: "documents", label: "Documentos", icon: <FaFileAlt /> },
-  { id: "signatures", label: "Assinaturas", icon: <FaPen /> },
-  { id: "reports", label: "Relatórios", icon: <FaChartLine /> },
-  { id: "settings", label: "Configurações", icon: <FaCogs /> },
-];
-
-const contentVariants = {
-  hidden: { opacity: 0, x: -10 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
-  exit: { opacity: 0, x: 10, transition: { duration: 0.3 } },
-};
-
-// Dados simulados para Documentos
-const documentsData: DocumentType[] = [
-  {
-    id: 1,
-    title: "Política de Segurança",
-    status: "Em revisão",
-    lastModified: "2023-09-15",
-    version: "v1.2",
-    fileType: "pdf",
-    tags: ["Segurança", "Política"],
-    favorite: false,
-    previewUrl: "https://example.com/sample.pdf",
-  },
-  {
-    id: 2,
-    title: "Termo de Confidencialidade",
-    status: "Aprovado",
-    lastModified: "2023-08-30",
-    version: "v1.0",
-    fileType: "word",
-    tags: ["Confidencialidade"],
-    favorite: false,
-    previewUrl: "https://example.com/sample.docx",
-  },
-  {
-    id: 3,
-    title: "Manual do Colaborador",
-    status: "Pendente",
-    lastModified: "2023-09-05",
-    version: "v2.0",
-    fileType: "excel",
-    tags: ["Manual", "Colaborador"],
-    favorite: false,
-    previewUrl: "https://example.com/sample.xlsx",
-  },
-];
-
-export default function HomePage() {
-  const [activeSection, setActiveSection] = useState("documents");
-  const [editingDocument, setEditingDocument] = useState<DocumentType | null>(null);
-
-  const renderMainContent = () => {
-    switch (activeSection) {
-      case "dashboard":
-        return (
-          <div className="p-8">
-            <h1 className="text-4xl font-bold text-blue-800">Dashboard</h1>
-            <p className="mt-2 text-gray-600">Conteúdo do Dashboard corporativo.</p>
-            {/* Adicione gráficos, indicadores e atividades recentes */}
-          </div>
-        );
-      case "documents":
-return <div className="p-8">Teste</div>;
-      case "signatures":
-        return <div className="p-8">Assinaturas</div>;
-      case "reports":
-        return <div className="p-8">Relatórios</div>;
-      case "settings":
-        return <div className="p-8">Configurações</div>;
-      default:
-        return null;
-    }
-  };
-
+export default function HomeDashboardPage() {
   return (
-    <div className={`${rubik.className} min-h-screen flex`}>
-      {/* Sidebar */}
-      <aside className="w-64 bg-blue-900 text-white flex-shrink-0">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold">GED Control</h1>
-          <p className="text-sm text-blue-300">Gerenciamento de Documentos</p>
-        </div>
-        <nav className="mt-6">
-          <ul className="space-y-2">
-            {sidebarItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => setActiveSection(item.id)}
-                  className={`flex items-center px-6 py-3 w-full text-left transition-colors focus:outline-none ${
-                    activeSection === item.id
-                      ? "bg-blue-800"
-                      : "hover:bg-blue-800 text-blue-200"
-                  }`}
-                >
-                  <span className="text-2xl">{item.icon}</span>
-                  <span className="ml-4 text-lg">{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
+    <div className="p-6 space-y-6">
+      {/* Top Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              New Training
+              <span className="text-sm bg-red-500 text-white rounded-full px-2">3</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="flex justify-between">
+              <span>Leadership Skills</span>
+              <div className="space-x-1">
+                <Button size="sm" variant="secondary">View</Button>
+                <Button size="sm">Enroll</Button>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span>Department Head</span>
+              <div className="space-x-1">
+                <Button size="sm" variant="secondary">View</Button>
+                <Button size="sm">Enroll</Button>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span>Safety Training</span>
+              <div className="space-x-1">
+                <Button size="sm" variant="secondary">View</Button>
+                <Button size="sm">Enroll</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Área Principal */}
-      <div className="flex flex-col flex-1">
-        {/* Cabeçalho Superior */}
-        <header className="bg-white shadow-md px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-blue-800">
-            {sidebarItems.find((item) => item.id === activeSection)?.label}
-          </h2>
-          <div className="flex items-center gap-4">
-            <button aria-label="Notificações">
-              <FaBell className="text-2xl text-gray-600 hover:text-blue-800 transition-colors" />
-            </button>
-            <Link href="/perfil" aria-label="Perfil">
-              <FaUserCircle className="text-3xl text-gray-600 hover:text-blue-800 transition-colors" />
-            </Link>
-          </div>
-        </header>
+        <Card>
+          <CardHeader>
+            <CardTitle>Training Goals</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span>Sales Team completed goals</span>
+              <Button size="sm" variant="ghost">View</Button>
+            </div>
+            <div className="flex justify-between">
+              <span>HR updated materials</span>
+              <Button size="sm" variant="ghost">View</Button>
+            </div>
+            <div className="flex justify-between">
+              <span>New sessions available</span>
+              <Button size="sm" variant="ghost">Explore</Button>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Conteúdo Principal */}
-        <main className="flex-1 overflow-auto bg-gray-100 p-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSection}
-              variants={contentVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {renderMainContent()}
-            </motion.div>
-          </AnimatePresence>
-        </main>
-
-        {/* Footer */}
-        <footer className="bg-white shadow-md px-6 py-4">
-          <div className="text-center text-gray-600">
-            © {new Date().getFullYear()} GED Control. Todos os direitos reservados.
-          </div>
-        </footer>
+        <Card>
+          <CardHeader>
+            <CardTitle>Upcoming Sessions</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="flex justify-between">
+              <span>Leadership</span>
+              <div className="space-x-1">
+                <Button size="sm">Join</Button>
+                <Button size="sm" variant="destructive">Cancel</Button>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span>Effective</span>
+              <div className="space-x-1">
+                <Button size="sm">Join</Button>
+                <Button size="sm" variant="destructive">Cancel</Button>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span>Project</span>
+              <div className="space-x-1">
+                <Button size="sm">Join</Button>
+                <Button size="sm" variant="destructive">Cancel</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Modal para Edição de Documento */}
-      <AnimatePresence>
-        {editingDocument && (
-          <DocumentEditorModal
-            doc={editingDocument}  // Aqui usamos a prop "doc"
-            onClose={() => setEditingDocument(null)}
-          />
-        )}
-      </AnimatePresence>
+      {/* Overview Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="text-center">
+          <CardHeader>
+            <CardTitle className="text-red-600 text-4xl">15/20</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Training Completed</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center gap-4 p-4">
+            <FaClipboardCheck className="text-blue-600 text-xl" />
+            <div>
+              <p className="font-medium">Progress</p>
+              <p className="text-sm text-muted-foreground">10 sessions</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center gap-4 p-4">
+            <FaBook className="text-green-600 text-xl" />
+            <div>
+              <p className="font-medium">Feedback</p>
+              <p className="text-sm text-muted-foreground">4.5 rating</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="flex items-center gap-4 p-4">
+            <FaBullseye className="text-purple-600 text-xl" />
+            <div>
+              <p className="font-medium">Goals</p>
+              <p className="text-sm text-muted-foreground">9.0 reached</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
